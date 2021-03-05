@@ -135,9 +135,9 @@
 
 #### （2）界面操作：上行优先级测试
 
-动图地址：https://gitee.com/beholder1234/PersonalOnlineSource/raw/master/PictureFromTypora/danpianji1.gif
+动图地址：https://github.com/beholder1234/PersonalOnlineSource/blob/main/PicGoUploadPicture/danpianji1.gif
 
 （图片无法加载可点以上网址）
 
-![danpianji1](https://gitee.com/beholder1234/PersonalOnlineSource/raw/master/PictureFromTypora/danpianji1.gif)
+![danpianji1(https://github.com/beholder1234/PersonalOnlineSource/blob/main/PicGoUploadPicture/danpianji1.gif)
 
