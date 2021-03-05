@@ -1,5 +1,9 @@
 # 基于单片机的电梯程序控制系统
 
+
+![danpianji1](https://github.com/beholder1234/PersonalOnlineSource/blob/main/PicGoUploadPicture/danpianji1.gif)
+
+
 ## 技术支持
 
 - 程序开发软件：Keil
@@ -139,5 +143,5 @@
 
 （图片无法加载可点以上网址）
 
-![danpianji1(https://github.com/beholder1234/PersonalOnlineSource/blob/main/PicGoUploadPicture/danpianji1.gif)
+![danpianji1](https://github.com/beholder1234/PersonalOnlineSource/blob/main/PicGoUploadPicture/danpianji1.gif)
 
