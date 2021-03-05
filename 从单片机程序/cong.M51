@@ -1,0 +1,346 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        06/02/2018  19:35:26  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+F:\MY SOFTWARE\C51\BIN\BL51.EXE cong1.obj TO cong
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  cong1.obj (CONG1)
+  F:\MY SOFTWARE\C51\LIB\C51S.LIB (?C_STARTUP)
+  F:\MY SOFTWARE\C51\LIB\C51S.LIB (?C?SCDIV)
+  F:\MY SOFTWARE\C51\LIB\C51S.LIB (?C?CCASE)
+  F:\MY SOFTWARE\C51\LIB\C51S.LIB (?C_INIT)
+
+
+LINK MAP OF MODULE:  cong (CONG1)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0038H     UNIT         ?DT?CONG1
+            DATA    0040H     0001H     UNIT         _DATA_GROUP_
+            IDATA   0041H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     0116H     UNIT         ?PR?BRIGHTLAMP?CONG1
+            CODE    0119H     00B8H     UNIT         ?PR?CONG_REQUESTACCEPT?CONG1
+            CODE    01D1H     008CH     UNIT         ?C_C51STARTUP
+            CODE    025DH     0073H     UNIT         ?PR?_CONG_REQUESTSENT?CONG1
+            CODE    02D0H     0067H     UNIT         ?PR?CONG_REQUESTACTIVATE?CONG1
+            CODE    0337H     0049H     UNIT         ?C_INITSEG
+            CODE    0380H     0048H     UNIT         ?C?LIB_CODE
+            CODE    03C8H     001AH     UNIT         ?PR?MAIN?CONG1
+
+
+
+OVERLAY MAP OF MODULE:   cong (CONG1)
+
+
+SEGMENT                                  DATA_GROUP 
+  +--> CALLED SEGMENT                  START    LENGTH
+------------------------------------------------------
+?C_C51STARTUP                          -----    -----
+  +--> ?PR?MAIN?CONG1
+  +--> ?C_INITSEG
+
+?PR?MAIN?CONG1                         -----    -----
+  +--> ?PR?BRIGHTLAMP?CONG1
+  +--> ?PR?CONG_REQUESTACTIVATE?CONG1
+  +--> ?PR?_CONG_REQUESTSENT?CONG1
+  +--> ?PR?CONG_REQUESTACCEPT?CONG1
+
+?PR?BRIGHTLAMP?CONG1                   0040H    0001H
+
+BL51 BANKED LINKER/LOCATER V6.22                                                      06/02/2018  19:35:26  PAGE 2
+
+
+
+
+SYMBOL TABLE OF MODULE:  cong (CONG1)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        CONG1
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  D:00A0H         PUBLIC        P2
+  D:0008H         PUBLIC        ButtonArray
+  B:00A0H.6       PUBLIC        LampClose
+  D:0080H         PUBLIC        Lamp
+  C:02D0H         PUBLIC        Cong_RequestActivate
+  D:0018H         PUBLIC        Cong_SentSaveArray
+  B:00A0H.5       PUBLIC        LampOpen
+  C:03C8H         PUBLIC        main
+  C:0119H         PUBLIC        Cong_RequestAccept
+  D:0020H         PUBLIC        Way
+  D:00B0H         PUBLIC        Keyboard
+  D:0021H         PUBLIC        KeyboardArray
+  D:00A0H         PUBLIC        Lamp0
+  B:00A0H.0       PUBLIC        Lamp1
+  D:0025H         PUBLIC        Location
+  B:00A0H.1       PUBLIC        Lamp2
+  B:00A0H.2       PUBLIC        Lamp3
+  B:00A0H.3       PUBLIC        Lamp4
+  B:00A0H.4       PUBLIC        Lamp5
+  D:0026H         PUBLIC        Cong_AcceptSaveArray
+  B:00A0H.7       PUBLIC        LampDanger
+  D:0090H         PUBLIC        Signal
+  B:0080H.0       PUBLIC        Lamp1UP
+  B:0080H.1       PUBLIC        Lamp2UP
+  B:0080H.2       PUBLIC        Lamp3UP
+  B:0080H.3       PUBLIC        Lamp4UP
+  C:0003H         PUBLIC        BrightLamp
+  D:0028H         PUBLIC        HoistControlArray
+  C:025DH         PUBLIC        _Cong_RequestSent
+  D:0038H         PUBLIC        LampControlArray
+  B:0080H.5       PUBLIC        Lamp2DOWN
+  B:0080H.6       PUBLIC        Lamp3DOWN
+  B:0080H.7       PUBLIC        Lamp4DOWN
+  B:0080H.4       PUBLIC        Lamp5DOWN
+  -------         PROC          BRIGHTLAMP
+  -------         DO            
+  D:0007H         SYMBOL        H
+  D:0006H         SYMBOL        L
+  D:0040H         SYMBOL        i
+  -------         ENDDO         
+  C:0003H         LINE#         50
+  C:0003H         LINE#         51
+  C:0003H         LINE#         52
+  C:0006H         LINE#         53
+  C:0008H         LINE#         54
+  C:0008H         LINE#         55
+  C:000FH         LINE#         56
+BL51 BANKED LINKER/LOCATER V6.22                                                      06/02/2018  19:35:26  PAGE 3
+
+
+  C:0011H         LINE#         57
+  C:0011H         LINE#         58
+  C:0022H         LINE#         59
+  C:0022H         LINE#         60
+  C:0067H         LINE#         61
+  C:0067H         LINE#         62
+  C:0067H         LINE#         63
+  C:0067H         LINE#         64
+  C:006CH         LINE#         65
+  C:006FH         LINE#         66
+  C:0071H         LINE#         67
+  C:0074H         LINE#         68
+  C:0074H         LINE#         69
+  C:0074H         LINE#         70
+  C:0074H         LINE#         71
+  C:0079H         LINE#         72
+  C:007BH         LINE#         73
+  C:007DH         LINE#         74
+  C:0080H         LINE#         75
+  C:0080H         LINE#         76
+  C:0080H         LINE#         77
+  C:0080H         LINE#         78
+  C:0085H         LINE#         79
+  C:0087H         LINE#         80
+  C:0089H         LINE#         81
+  C:008BH         LINE#         82
+  C:008BH         LINE#         83
+  C:008BH         LINE#         84
+  C:008BH         LINE#         85
+  C:0090H         LINE#         86
+  C:0092H         LINE#         87
+  C:0094H         LINE#         88
+  C:0096H         LINE#         89
+  C:0096H         LINE#         90
+  C:0096H         LINE#         91
+  C:0096H         LINE#         92
+  C:009BH         LINE#         93
+  C:009DH         LINE#         94
+  C:009FH         LINE#         95
+  C:00A1H         LINE#         96
+  C:00A1H         LINE#         97
+  C:00A1H         LINE#         98
+  C:00A1H         LINE#         99
+  C:00A6H         LINE#         100
+  C:00A8H         LINE#         102
+  C:00AAH         LINE#         103
+  C:00ACH         LINE#         104
+  C:00ACH         LINE#         105
+  C:00ACH         LINE#         106
+  C:00ACH         LINE#         107
+  C:00B1H         LINE#         108
+  C:00B3H         LINE#         109
+  C:00B5H         LINE#         110
+  C:00B7H         LINE#         111
+  C:00B7H         LINE#         112
+  C:00B7H         LINE#         113
+  C:00B7H         LINE#         114
+BL51 BANKED LINKER/LOCATER V6.22                                                      06/02/2018  19:35:26  PAGE 4
+
+
+  C:00BCH         LINE#         115
+  C:00BEH         LINE#         116
+  C:00C0H         LINE#         117
+  C:00C2H         LINE#         118
+  C:00C2H         LINE#         119
+  C:00C2H         LINE#         120
+  C:00C2H         LINE#         121
+  C:00C7H         LINE#         122
+  C:00C9H         LINE#         123
+  C:00CBH         LINE#         124
+  C:00CDH         LINE#         125
+  C:00CDH         LINE#         126
+  C:00CDH         LINE#         127
+  C:00CDH         LINE#         128
+  C:00D2H         LINE#         129
+  C:00D4H         LINE#         131
+  C:00D6H         LINE#         132
+  C:00D8H         LINE#         133
+  C:00D8H         LINE#         134
+  C:00D8H         LINE#         135
+  C:00D8H         LINE#         136
+  C:00DDH         LINE#         137
+  C:00DFH         LINE#         138
+  C:00E1H         LINE#         139
+  C:00E3H         LINE#         140
+  C:00E3H         LINE#         141
+  C:00E3H         LINE#         142
+  C:00E3H         LINE#         143
+  C:00E8H         LINE#         144
+  C:00EAH         LINE#         145
+  C:00ECH         LINE#         146
+  C:00EEH         LINE#         147
+  C:00EEH         LINE#         148
+  C:00EEH         LINE#         149
+  C:00EEH         LINE#         150
+  C:00F3H         LINE#         151
+  C:00F8H         LINE#         152
+  C:00FAH         LINE#         153
+  C:00FCH         LINE#         154
+  C:00FCH         LINE#         155
+  C:00FCH         LINE#         156
+  C:00FCH         LINE#         157
+  C:00FEH         LINE#         158
+  C:0100H         LINE#         159
+  C:0100H         LINE#         160
+  C:0100H         LINE#         161
+  C:0100H         LINE#         162
+  C:0102H         LINE#         163
+  C:0104H         LINE#         164
+  C:0104H         LINE#         165
+  C:0104H         LINE#         166
+  C:0104H         LINE#         167
+  C:0106H         LINE#         168
+  C:0106H         LINE#         169
+  C:0106H         LINE#         170
+  C:0106H         LINE#         172
+  C:010FH         LINE#         173
+BL51 BANKED LINKER/LOCATER V6.22                                                      06/02/2018  19:35:26  PAGE 5
+
+
+  C:0118H         LINE#         175
+  -------         ENDPROC       BRIGHTLAMP
+  -------         PROC          CONG_REQUESTACCEPT
+  C:0119H         LINE#         178
+  C:0119H         LINE#         179
+  C:0119H         LINE#         180
+  C:011CH         LINE#         181
+  C:0121H         LINE#         182
+  C:0124H         LINE#         183
+  C:015AH         LINE#         184
+  C:015AH         LINE#         185
+  C:0168H         LINE#         186
+  C:0176H         LINE#         187
+  C:0184H         LINE#         188
+  C:0192H         LINE#         189
+  C:01A0H         LINE#         190
+  C:01AEH         LINE#         191
+  C:01BCH         LINE#         192
+  C:01CAH         LINE#         193
+  C:01CCH         LINE#         194
+  C:01CEH         LINE#         195
+  C:01D0H         LINE#         198
+  C:01D0H         LINE#         201
+  -------         ENDPROC       CONG_REQUESTACCEPT
+  -------         PROC          CONG_REQUESTACTIVATE
+  C:02D0H         LINE#         202
+  C:02D0H         LINE#         203
+  C:02D0H         LINE#         204
+  C:02D6H         LINE#         205
+  C:02D9H         LINE#         207
+  C:02E3H         LINE#         208
+  C:02E6H         LINE#         210
+  C:02F0H         LINE#         211
+  C:02F3H         LINE#         213
+  C:02FDH         LINE#         214
+  C:0300H         LINE#         216
+  C:0306H         LINE#         218
+  C:0309H         LINE#         220
+  C:0315H         LINE#         221
+  C:0318H         LINE#         223
+  C:0324H         LINE#         224
+  C:0327H         LINE#         226
+  C:0333H         LINE#         227
+  C:0336H         LINE#         230
+  -------         ENDPROC       CONG_REQUESTACTIVATE
+  -------         PROC          _CONG_REQUESTSENT
+  D:0007H         SYMBOL        Location
+  D:0005H         SYMBOL        Way
+  -------         DO            
+  D:0006H         SYMBOL        i
+  -------         ENDDO         
+  C:025DH         LINE#         232
+  C:025DH         LINE#         233
+  C:025DH         LINE#         235
+  C:025FH         LINE#         236
+  C:025FH         LINE#         237
+  C:027CH         LINE#         238
+BL51 BANKED LINKER/LOCATER V6.22                                                      06/02/2018  19:35:26  PAGE 6
+
+
+  C:027CH         LINE#         239
+  C:027EH         LINE#         240
+  C:027FH         LINE#         242
+  C:027FH         LINE#         243
+  C:029CH         LINE#         244
+  C:029CH         LINE#         245
+  C:029EH         LINE#         246
+  C:029FH         LINE#         248
+  C:029FH         LINE#         249
+  C:02C6H         LINE#         250
+  C:02C6H         LINE#         251
+  C:02C8H         LINE#         253
+  C:02C9H         LINE#         254
+  C:02C9H         LINE#         255
+  C:02CFH         LINE#         256
+  -------         ENDPROC       _CONG_REQUESTSENT
+  -------         PROC          MAIN
+  C:03C8H         LINE#         260
+  C:03C8H         LINE#         261
+  C:03C8H         LINE#         262
+  C:03CBH         LINE#         263
+  C:03CDH         LINE#         264
+  C:03D0H         LINE#         265
+  C:03D0H         LINE#         266
+  C:03D0H         LINE#         267
+  C:03D3H         LINE#         268
+  C:03D6H         LINE#         269
+  C:03DDH         LINE#         270
+  C:03E0H         LINE#         273
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        CONG1
+
+  -------         MODULE        ?C?SCDIV
+  C:0380H         PUBLIC        ?C?SCDIV
+  -------         ENDMOD        ?C?SCDIV
+
+  -------         MODULE        ?C?CCASE
+  C:03A2H         PUBLIC        ?C?CCASE
+  -------         ENDMOD        ?C?CCASE
+
+Program Size: data=66.0 xdata=0 code=994
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

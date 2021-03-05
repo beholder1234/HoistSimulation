@@ -1,0 +1,313 @@
+C51 COMPILER V9.01   CONG1                                                                 06/04/2018 12:19:46 PAGE 1   
+
+
+C51 COMPILER V9.01, COMPILATION OF MODULE CONG1
+OBJECT MODULE PLACED IN cong1.OBJ
+COMPILER INVOKED BY: F:\My software\C51\BIN\C51.EXE cong1.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include <reg51.h>
+   2          
+   3          //**********************-------Òý½Å¶¨Òå²¿·Ö--------*********************//
+   4          sfr Lamp=0x80;
+   5          sfr Lamp0=0xa0;                      
+   6          sfr Keyboard=0xb0;
+   7          sfr Signal=0x90; 
+   8          
+   9          sbit Lamp1UP=P0^0;                      //p1Òý½ÅÎªÍâºôÇëÇóµÆ
+  10          sbit Lamp2UP=P0^1;
+  11          sbit Lamp3UP=P0^2;
+  12          sbit Lamp4UP=P0^3;
+  13          sbit Lamp5DOWN=P0^4;
+  14          sbit Lamp2DOWN=P0^5;
+  15          sbit Lamp3DOWN=P0^6;
+  16          sbit Lamp4DOWN=P0^7;
+  17          
+  18          sbit Lamp1=P2^0;                   //p2Òý½ÅÎªÄÚÑ¡ÇëÇóµÆ
+  19          sbit Lamp2=P2^1;
+  20          sbit Lamp3=P2^2;
+  21          sbit Lamp4=P2^3;
+  22          sbit Lamp5=P2^4;
+  23          sbit LampOpen=P2^5;
+  24          sbit LampClose=P2^6;
+  25          sbit LampDanger=P2^7;
+  26          
+  27          
+  28          //**********************-------È«¾Ö±äÁ¿¶¨Òå²¿·Ö--------*********************//
+  29          char KeyboardArray[]={0xfe,0xfd,0xfb,0xf7};                                          //¸÷ÐÐ¼üÅÌ¼¤»îÊý×é
+  30          
+  31          char ButtonArray[]={0xee,0xde,0xbe,0x7e,
+  32                                            0xed,0xdd,0xbd,0x7d,
+  33                                            0xeb,0xdb,0xbb,0x7b,
+  34                                            0xe7,0xd7,0xb7,0x77};                                          //¼üÅÌ°´¼üÅÐ¶ÏÊý×é       µÚÒ»¶þÈýËÄÐÐ°´¼ü
+             -£¨´Ó×óµ½ÓÒ£©
+  35          
+  36          char HoistControlArray[]={0xf0,0xf1,0xf2,0xf3,
+  37                                    0xf4,0xf5,0xf6,0xf7,                                                                  //0Xf8±íÍ¬²ã
+  38                                                        0xf8,0xf9,0xfa,0xfb,
+  39                                                    0xfc,0xfd,0xfe,0xff};
+  40          char Cong_SentSaveArray[8]={0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff};
+  41          char LampControlArray[]={0x0f,0x1f,0x2f,0x3f,
+  42                                   0xcf,0xbf,0xaf,0x9f};
+  43          
+  44          char Cong_AcceptSaveArray[2]={0xff,0xff};
+  45          char Location=1,Way=0;
+  46          
+  47          //**********************-------ÁÁµÆ×Ó³ÌÐò--------*********************//
+  48          void Cong_RequestSent(char Location,char Way);
+  49          void Cong_RequestAccept();
+  50          void BrightLamp()                                                 
+  51          {
+  52   1       char H,L,i=10;
+  53   1           for(H=0;H<4;H++)
+  54   1                   {                                                                                  // H:ÐÐÑ¡
+C51 COMPILER V9.01   CONG1                                                                 06/04/2018 12:19:46 PAGE 2   
+
+  55   2                   Keyboard=KeyboardArray[H];                                                       // ¸÷ÐÐ¼üÅÌ¼¤»îÓï¾ä
+  56   2                   for(L=0;L<4;L++)                                                         // L:ÁÐÑ¡
+  57   2                        {
+  58   3                        if(Keyboard==ButtonArray[H*4+L])
+  59   3                                    {
+  60   4                                         switch(H*4+L)                                                                        //µãÁÁ°´¼üÏàÓ¦ÇëÇóµÆ
+  61   4                                             {
+  62   5                                                  case 0:
+  63   5                                                          {
+  64   6                                                           if(Location==1)
+  65   6                                                                   Signal=0xf8;
+  66   6                                                               else Lamp1UP=1;
+  67   6                                                               break;
+  68   6                                                               }
+  69   5                                                      case 1:
+  70   5                                                           {
+  71   6                                                                if(Location==2)
+  72   6                                                                    Signal=0xf8;
+  73   6                                                                else Lamp2UP=1;
+  74   6                                                                break;
+  75   6                                                               }
+  76   5                                                      case 2:
+  77   5                                                            {
+  78   6                                                                 if(Location==3)
+  79   6                                                                    Signal=0xf8;
+  80   6                                                                 else Lamp3UP=1; 
+  81   6                                                         break;
+  82   6                                                                }
+  83   5                                                      case 3:
+  84   5                                                            {
+  85   6                                                                 if(Location==4)
+  86   6                                                                    Signal=0xf8;
+  87   6                                                                 else Lamp4UP=1;
+  88   6                                                                 break;
+  89   6                                                                }
+  90   5                                                      case 4:
+  91   5                                                            {
+  92   6                                                                 if(Location==5)
+  93   6                                                                    Signal=0xf8;
+  94   6                                                                 else Lamp5DOWN=1; 
+  95   6                                                                 break;
+  96   6                                                                }
+  97   5                                                      case 5:
+  98   5                                                            {
+  99   6                                                                if(Location==2)
+ 100   6                                                                    Signal=0xf8;
+ 101   6                                                                //else {Lamp2DOWN=1;Lamp0=0xf0;}
+ 102   6                                                                else Lamp2DOWN=1;
+ 103   6                                                                break;
+ 104   6                                                                }
+ 105   5                                                      case 6:
+ 106   5                                                            {
+ 107   6                                                                if(Location==3)
+ 108   6                                                                    Signal=0xf8;
+ 109   6                                                                else Lamp3DOWN=1; 
+ 110   6                                                                break;
+ 111   6                                                                }
+ 112   5                                                      case 7:
+ 113   5                                                            {
+ 114   6                                                                if(Location==4)
+ 115   6                                                                    Signal=0xf8;
+ 116   6                                                                else Lamp4DOWN=1; 
+C51 COMPILER V9.01   CONG1                                                                 06/04/2018 12:19:46 PAGE 3   
+
+ 117   6                                                                break;
+ 118   6                                                                }
+ 119   5                                                      case 8:
+ 120   5                                                            {
+ 121   6                                                                if(Location==1)
+ 122   6                                                                    Signal=0xf8;
+ 123   6                                                                else Lamp1=1;
+ 124   6                                                                break;
+ 125   6                                                                }
+ 126   5                                                      case 9:
+ 127   5                                                            {
+ 128   6                                                                if(Location==2)
+ 129   6                                                                    Signal=0xf8;
+ 130   6                                                                //else {Lamp2=1;Lamp0=0xf0;}
+ 131   6                                                                else Lamp2=1; 
+ 132   6                                                                break;
+ 133   6                                                                }
+ 134   5                                                      case 10:
+ 135   5                                                            {
+ 136   6                                                                if(Location==3)
+ 137   6                                                                    Signal=0xf8;
+ 138   6                                                                else Lamp3=1; 
+ 139   6                                                                break;
+ 140   6                                                                }
+ 141   5                                                      case 11:
+ 142   5                                                            {
+ 143   6                                                                if(Location==4)
+ 144   6                                                                    Signal=0xf8;
+ 145   6                                                                else Lamp4=1;
+ 146   6                                                                break;
+ 147   6                                                                }
+ 148   5                                                      case 12:
+ 149   5                                                            {
+ 150   6                                                                if(Location==5)
+ 151   6                                                                    Signal=0xf8;
+ 152   6                                                                else Lamp5=1;
+ 153   6                                                                break;
+ 154   6                                                                }
+ 155   5                                                      case 13:
+ 156   5                                                            {
+ 157   6                                                                LampOpen=1;
+ 158   6                                                                break;
+ 159   6                                                                }
+ 160   5                                                      case 14:
+ 161   5                                                            {
+ 162   6                                                                LampClose=1;
+ 163   6                                                                break;
+ 164   6                                                                }
+ 165   5                                                      case 15:
+ 166   5                                                            {
+ 167   6                                                                LampDanger=1;
+ 168   6                                                                break;
+ 169   6                                                                }
+ 170   5      }}
+ 171   3      //Lamp0=HoistControlArray[Lamp2DOWN]<<4;
+ 172   3              }
+ 173   2          }
+ 174   1      
+ 175   1      }
+ 176          
+ 177          
+ 178          void Cong_RequestAccept()
+C51 COMPILER V9.01   CONG1                                                                 06/04/2018 12:19:46 PAGE 4   
+
+ 179          {
+ 180   1      Cong_AcceptSaveArray[0]=Signal;
+ 181   1      if(Cong_AcceptSaveArray[0]==0x08)
+ 182   1          Signal=0xff;    
+ 183   1      switch((((Cong_AcceptSaveArray[0]>>4)<<4)+0x0f))                                                         //ÒòÏÂÐÐÊ±µÍËÄÎ»»á²»¶Ï±ä»¯£¬¶øµÚµÍËÄÎ»ÔÚ´Ë²»ÓÃÓÚÅÐ
+             -¶Ï
+ 184   1          {                                                                                                                                           //¹ÊÎª±ÜÃâµÍËÄÎ»½ÓÊÕ´íÎóÓ°ÏìÅÐ¶ÏÓÃÁËÒÆÎ»
+ 185   2           case 0x0f:{Location=1;Way=0;Lamp1UP=0;Lamp1=0;Cong_SentSaveArray[0]=0xff;break;}
+ 186   2               case 0x1f:{Location=2;Way=0;Lamp2UP=0;Lamp2=0;Cong_SentSaveArray[1]=0xff;break;} 
+ 187   2               case 0x2f:{Location=3;Way=0;Lamp3UP=0;Lamp3=0;Cong_SentSaveArray[2]=0xff;break;}
+ 188   2               case 0x3f:{Location=4;Way=0;Lamp4UP=0;Lamp4=0;Cong_SentSaveArray[3]=0xff;break;}
+ 189   2               case 0xcf:{Location=5;Way=4;Lamp5DOWN=0;Lamp5=0;Cong_SentSaveArray[4]=0xff;break;}
+ 190   2               case 0xbf:{Location=4;Way=4;Lamp4DOWN=0;Lamp4=0;Cong_SentSaveArray[5]=0xff;break;}
+ 191   2               case 0xaf:{Location=3;Way=4;Lamp3DOWN=0;Lamp3=0;Cong_SentSaveArray[6]=0xff;break;}
+ 192   2               case 0x9f:{Location=2;Way=4;Lamp2DOWN=0;Lamp2=0;Cong_SentSaveArray[7]=0xff;break;}
+ 193   2               case 0x4f:{LampOpen=0;}
+ 194   2               case 0x5f:{LampClose=0;}
+ 195   2               case 0x6f:{LampDanger=0;}
+ 196   2      
+ 197   2      
+ 198   2              }
+ 199   1      
+ 200   1      //Lamp0=Cong_AcceptSaveArray[0]>>4<<4;
+ 201   1      }
+ 202          void Cong_RequestActivate()                        //¹ØÓÚ Òý½ÅifÅÐ¶Ï¿ÉÄÜÓÐ´í
+ 203          {
+ 204   1      if(Lamp1 || Lamp1UP)                                                                    //ÒòÃ»ÓÐLamp1DOWNµÄ´æÔÚ£¬Ã»±ØÒª£¬Ò²²»¿ÉÅÐ¶ÏWay
+ 205   1          Cong_SentSaveArray[0]=HoistControlArray[0];                 
+ 206   1      
+ 207   1      if((Lamp2 && Way==0 ) || Lamp2UP)                       // Lamp2 && Way==0 ÅÐ¶ÏÇÅÏáÔÚÒ»Â¥Ê±£¬°´ÄÚºô¶þÂ¥°´¼ü¡£ÓÐÐ§
+ 208   1              Cong_SentSaveArray[1]=HoistControlArray[1];             //Àý£ºÈç¹ûÇÅÏáÔÚ5Â¥£¬´ËÊ±°´ÏÂLamp1ºÍLamp2£»ÔòÇÅÏáÓ¦ÏÈÍ£ÔÚ¶þ²
+             -ã£¬ÔÙÍ£ÔÚÒ»²ã
+ 209   1                                                                                                              //¶ø°´ÏÂLamp1UPºÍLamp2UP£»ÔòÇÅÏáÓ¦ÏÈÍ£ÔÚÒ»²ã£¬ÔÙÍ£ÔÚ¶þ²ã
+ 210   1      if((Lamp3 && Way==0) || Lamp3UP)                                                        //Ö»ÓÐ°´ÏÂLamp1DOWNºÍLamp2DOWN£»Óë°´ÏÂLamp1ºÍLamp2ÓÅÏÈ¼¶ÏàÍ¬£¬
+ 211   1          Cong_SentSaveArray[2]=HoistControlArray[2];         //ËùÒÔ¼ÓÉÏWay==0£¬ÓÃÓÚÅÐ¶ÏÇÅÏáÊÇÉÏÐÐ»òÏÂÐÐ£¬´Ó¶øÅÐ¶Ï°´ÏÂÄ
+             -ÚÑ¡LampÊ±£¬
+ 212   1                                                                                                              //Ó¦¼¤»îµÄÓÅÏÈ¼¶·½Ê½ÅÐ¶Ï·½·¨
+ 213   1      if((Lamp4 && Way==0) || Lamp4UP)                                
+ 214   1          Cong_SentSaveArray[3]=HoistControlArray[3];
+ 215   1      
+ 216   1      if(Lamp5 || Lamp5DOWN)                                 //ÒòÃ»ÓÐLamp5UPµÄ´æÔÚ£¬Ã»±ØÒª£¬Ò²²»¿ÉÅÐ¶ÏWay
+ 217   1      //if(Lamp5DOWN)                                                                    //======ÎªÁËµ÷ÊÔ£¬Lamp0ÔÝÊ±¸ßËÄÎ»Òý½Å²»²úÉúÐ§¹û
+ 218   1          Cong_SentSaveArray[4]=HoistControlArray[4];
+ 219   1      
+ 220   1      if((Lamp4 && Way==4) || Lamp4DOWN)
+ 221   1          Cong_SentSaveArray[5]=HoistControlArray[5];
+ 222   1      
+ 223   1      if((Lamp3 && Way==4) || Lamp3DOWN)
+ 224   1          Cong_SentSaveArray[6]=HoistControlArray[6];
+ 225   1      
+ 226   1      if((Lamp2 && Way==4) || Lamp2DOWN)
+ 227   1          Cong_SentSaveArray[7]=HoistControlArray[7];
+ 228   1      
+ 229   1      
+ 230   1      }
+ 231          
+ 232          void Cong_RequestSent(char Location,char Way)           // Location:ÇÅÏáËùÔÚÂ¥²ã Way£ºÇÅÏáÔËÐÐ·½Ïò      0:ÉÏÐÐ 4:ÏÂ
+             -ÐÐ
+ 233          {
+ 234   1      char i;                                                                    // i:¶ÔRequestSaveArray½øÐÐµÝÔöÉ¨ÃèµÄ±äÁ¿
+ 235   1          for(i=0;i<8;i++)
+ 236   1                  {                                                             // (Location-1+i)%8 ×÷ÓÃ£ºÉÏÐÐÈ·±£ÏÈ´Ó×î¸ßÓÅÏÈ¼¶¿ªÊ¼
+C51 COMPILER V9.01   CONG1                                                                 06/04/2018 12:19:46 PAGE 5   
+
+             -É¨Ãè
+ 237   2                  if(Way==0 && (Cong_SentSaveArray[(Location-1+i)%8] ^ 0xff))
+ 238   2                              {
+ 239   3                          Signal=Cong_SentSaveArray[(Location-1+i)%8];
+ 240   3                          break;                                                                                                               
+ 241   3                  //Lamp0=Cong_AcceptSaveArray[0]>>4<<4;
+ 242   3                          }
+ 243   2                      else if(Location==5 && (Cong_SentSaveArray[(Location-1+i)%8] ^ 0xff))
+ 244   2                          {
+ 245   3                              Signal=Cong_SentSaveArray[(Location-1+i)%8];
+ 246   3                          break;                                                                                                      
+ 247   3                              
+ 248   3                              }
+ 249   2              else if(Way==4  && (Cong_SentSaveArray[(Way+5-Location+i)%8] ^ 0xff)  && Location!=5)             // (Way+5
+             --Location+i)%8 ×÷ÓÃ£ºÏÂÐÐÈ·±£ÏÈ´Ó×î¸ßÓÅÏÈ¼¶¿ªÊ¼É¨Ãè
+ 250   2                      {
+ 251   3                          Signal=Cong_SentSaveArray[(Way+5-Location+i)%8];
+ 252   3                              //LampDanger=1;
+ 253   3                          break;                                                                                              
+ 254   3                          }
+ 255   2                  }
+ 256   1      }
+ 257          
+ 258          //**********************-------Ö÷³ÌÐò²¿·Ö--------*********************//
+ 259             
+ 260          void main()
+ 261          {
+ 262   1      Lamp=0x00;
+ 263   1      Lamp0=0x00;
+ 264   1      Signal=0xff;
+ 265   1      while(1)
+ 266   1          {
+ 267   2           BrightLamp();
+ 268   2               Cong_RequestActivate();
+ 269   2               Cong_RequestSent(Location,Way);
+ 270   2               Cong_RequestAccept();                                                               //ÁÁµÆ×Ó³ÌÐòµ÷ÓÃ
+ 271   2                                       
+ 272   2              
+ 273   2              }
+ 274   1      
+ 275   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    706    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     56       1
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
