@@ -1,8 +1,7 @@
 # 基于单片机的电梯程序控制系统
 
 
-![danpianji1](https://github.com/beholder1234/PersonalOnlineSource/blob/main/PicGoUploadPicture/danpianji1.gif)
-
+<img src="https://github.com/beholder1234/PersonalOnlineSource/blob/main/PicGoUploadPicture/danpianji1.gif" alt="image-20210305210124967" style="zoom:50%;" />
 
 ## 技术支持
 
